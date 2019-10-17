@@ -1,0 +1,51 @@
+﻿@model IEnumerable<PruebaCRUD.Models.TONT_AVES>
+
+@{
+    ViewBag.Title = "Index";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<h2>Index</h2>
+
+<p>
+    @Html.ActionLink("Create New", "Create")
+</p>
+<table class="table">
+    <tr>
+        <th>
+            Nombre Com&uacute;n
+        </th>
+        <th>
+            Nombre Cient&iacute;fico
+        </th>
+        <th>
+            Pa&iacute;s
+        </th>
+        <th>
+            Zona
+        </th>
+        <th></th>
+    </tr>
+
+@foreach (var item in Model) {
+<tr>
+    <td>
+        @Html.DisplayFor(modelItem => item.DSNOMBRE_COMUN)
+    </td>
+    <td>
+        @Html.DisplayFor(modelItem => item.DSNOMBRE_CIENTIFICO)
+    </td>
+    <td>
+        @Html.DisplayFor(modelItem => item.TONT_PAISES.FirstOrDefault().DSNOMBRE)
+    </td>
+    <td>
+        @Html.DisplayFor(modelItem => item.TONT_PAISES.FirstOrDefault().TONT_ZONAS.DSNOMBRE)
+    </td>
+    <td>
+        @Html.ActionLink("Edit", "Edit", new { id = item.CDAVE }) |
+        @Html.ActionLink("Delete", "Delete", new { id = item.CDAVE })
+    </td>
+</tr>
+}
+
+</table>

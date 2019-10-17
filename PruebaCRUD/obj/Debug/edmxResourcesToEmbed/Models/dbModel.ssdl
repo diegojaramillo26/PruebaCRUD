@@ -1,0 +1,94 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Schema Namespace="dbModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+  <EntityType Name="TONT_AVES">
+    <Key>
+      <PropertyRef Name="CDAVE" />
+    </Key>
+    <Property Name="CDAVE" Type="varchar" MaxLength="5" Nullable="false" />
+    <Property Name="DSNOMBRE_COMUN" Type="varchar" MaxLength="100" Nullable="false" />
+    <Property Name="DSNOMBRE_CIENTIFICO" Type="varchar" MaxLength="200" Nullable="false" />
+  </EntityType>
+  <EntityType Name="TONT_PAISES">
+    <Key>
+      <PropertyRef Name="CDPAIS" />
+    </Key>
+    <Property Name="CDPAIS" Type="varchar" MaxLength="3" Nullable="false" />
+    <Property Name="DSNOMBRE" Type="varchar" MaxLength="100" Nullable="false" />
+    <Property Name="CDZONA" Type="varchar" MaxLength="3" Nullable="false" />
+  </EntityType>
+  <EntityType Name="TONT_PAISES_AVES">
+    <Key>
+      <PropertyRef Name="CDPAIS" />
+      <PropertyRef Name="CDAVE" />
+    </Key>
+    <Property Name="CDPAIS" Type="varchar" MaxLength="3" Nullable="false" />
+    <Property Name="CDAVE" Type="varchar" MaxLength="5" Nullable="false" />
+  </EntityType>
+  <EntityType Name="TONT_ZONAS">
+    <Key>
+      <PropertyRef Name="CDZONA" />
+    </Key>
+    <Property Name="CDZONA" Type="varchar" MaxLength="3" Nullable="false" />
+    <Property Name="DSNOMBRE" Type="varchar" MaxLength="45" Nullable="false" />
+  </EntityType>
+  <Association Name="FK_TONT_PAISES_AVES_TONT_AVES">
+    <End Role="TONT_AVES" Type="Self.TONT_AVES" Multiplicity="1">
+      <OnDelete Action="Cascade" />
+    </End>
+    <End Role="TONT_PAISES_AVES" Type="Self.TONT_PAISES_AVES" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="TONT_AVES">
+        <PropertyRef Name="CDAVE" />
+      </Principal>
+      <Dependent Role="TONT_PAISES_AVES">
+        <PropertyRef Name="CDAVE" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_TONT_PAISES_AVES_TONT_PAISES">
+    <End Role="TONT_PAISES" Type="Self.TONT_PAISES" Multiplicity="1">
+      <OnDelete Action="Cascade" />
+    </End>
+    <End Role="TONT_PAISES_AVES" Type="Self.TONT_PAISES_AVES" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="TONT_PAISES">
+        <PropertyRef Name="CDPAIS" />
+      </Principal>
+      <Dependent Role="TONT_PAISES_AVES">
+        <PropertyRef Name="CDPAIS" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_TONT_PAISES_TONT_ZONAS">
+    <End Role="TONT_ZONAS" Type="Self.TONT_ZONAS" Multiplicity="1">
+      <OnDelete Action="Cascade" />
+    </End>
+    <End Role="TONT_PAISES" Type="Self.TONT_PAISES" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="TONT_ZONAS">
+        <PropertyRef Name="CDZONA" />
+      </Principal>
+      <Dependent Role="TONT_PAISES">
+        <PropertyRef Name="CDZONA" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <EntityContainer Name="dbModelStoreContainer">
+    <EntitySet Name="TONT_AVES" EntityType="Self.TONT_AVES" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="TONT_PAISES" EntityType="Self.TONT_PAISES" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="TONT_PAISES_AVES" EntityType="Self.TONT_PAISES_AVES" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="TONT_ZONAS" EntityType="Self.TONT_ZONAS" Schema="dbo" store:Type="Tables" />
+    <AssociationSet Name="FK_TONT_PAISES_AVES_TONT_AVES" Association="Self.FK_TONT_PAISES_AVES_TONT_AVES">
+      <End Role="TONT_AVES" EntitySet="TONT_AVES" />
+      <End Role="TONT_PAISES_AVES" EntitySet="TONT_PAISES_AVES" />
+    </AssociationSet>
+    <AssociationSet Name="FK_TONT_PAISES_AVES_TONT_PAISES" Association="Self.FK_TONT_PAISES_AVES_TONT_PAISES">
+      <End Role="TONT_PAISES" EntitySet="TONT_PAISES" />
+      <End Role="TONT_PAISES_AVES" EntitySet="TONT_PAISES_AVES" />
+    </AssociationSet>
+    <AssociationSet Name="FK_TONT_PAISES_TONT_ZONAS" Association="Self.FK_TONT_PAISES_TONT_ZONAS">
+      <End Role="TONT_ZONAS" EntitySet="TONT_ZONAS" />
+      <End Role="TONT_PAISES" EntitySet="TONT_PAISES" />
+    </AssociationSet>
+  </EntityContainer>
+</Schema>

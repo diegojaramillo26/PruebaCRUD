@@ -1,0 +1,39 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
+  <EntityContainerMapping StorageEntityContainer="dbModelStoreContainer" CdmEntityContainer="dbEntities">
+    <EntitySetMapping Name="TONT_AVES">
+      <EntityTypeMapping TypeName="dbModel.TONT_AVES">
+        <MappingFragment StoreEntitySet="TONT_AVES">
+          <ScalarProperty Name="CDAVE" ColumnName="CDAVE" />
+          <ScalarProperty Name="DSNOMBRE_COMUN" ColumnName="DSNOMBRE_COMUN" />
+          <ScalarProperty Name="DSNOMBRE_CIENTIFICO" ColumnName="DSNOMBRE_CIENTIFICO" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="TONT_PAISES">
+      <EntityTypeMapping TypeName="dbModel.TONT_PAISES">
+        <MappingFragment StoreEntitySet="TONT_PAISES">
+          <ScalarProperty Name="CDPAIS" ColumnName="CDPAIS" />
+          <ScalarProperty Name="DSNOMBRE" ColumnName="DSNOMBRE" />
+          <ScalarProperty Name="CDZONA" ColumnName="CDZONA" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="TONT_ZONAS">
+      <EntityTypeMapping TypeName="dbModel.TONT_ZONAS">
+        <MappingFragment StoreEntitySet="TONT_ZONAS">
+          <ScalarProperty Name="CDZONA" ColumnName="CDZONA" />
+          <ScalarProperty Name="DSNOMBRE" ColumnName="DSNOMBRE" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <AssociationSetMapping Name="TONT_PAISES_AVES" TypeName="dbModel.TONT_PAISES_AVES" StoreEntitySet="TONT_PAISES_AVES">
+      <EndProperty Name="TONT_AVES">
+        <ScalarProperty Name="CDAVE" ColumnName="CDAVE" />
+      </EndProperty>
+      <EndProperty Name="TONT_PAISES">
+        <ScalarProperty Name="CDPAIS" ColumnName="CDPAIS" />
+      </EndProperty>
+    </AssociationSetMapping>
+  </EntityContainerMapping>
+</Mapping>

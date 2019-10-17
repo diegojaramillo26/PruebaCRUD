@@ -1,0 +1,225 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="3.0" xmlns:edmx="http://schemas.microsoft.com/ado/2009/11/edmx">
+  <!-- EF Runtime content -->
+  <edmx:Runtime>
+    <!-- SSDL content -->
+    <edmx:StorageModels>
+      <Schema Namespace="dbModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+        <EntityType Name="TONT_AVES">
+          <Key>
+            <PropertyRef Name="CDAVE" />
+          </Key>
+          <Property Name="CDAVE" Type="varchar" MaxLength="5" Nullable="false" />
+          <Property Name="DSNOMBRE_COMUN" Type="varchar" MaxLength="100" Nullable="false" />
+          <Property Name="DSNOMBRE_CIENTIFICO" Type="varchar" MaxLength="200" Nullable="false" />
+        </EntityType>
+        <EntityType Name="TONT_PAISES">
+          <Key>
+            <PropertyRef Name="CDPAIS" />
+          </Key>
+          <Property Name="CDPAIS" Type="varchar" MaxLength="3" Nullable="false" />
+          <Property Name="DSNOMBRE" Type="varchar" MaxLength="100" Nullable="false" />
+          <Property Name="CDZONA" Type="varchar" MaxLength="3" Nullable="false" />
+        </EntityType>
+        <EntityType Name="TONT_PAISES_AVES">
+          <Key>
+            <PropertyRef Name="CDPAIS" />
+            <PropertyRef Name="CDAVE" />
+          </Key>
+          <Property Name="CDPAIS" Type="varchar" MaxLength="3" Nullable="false" />
+          <Property Name="CDAVE" Type="varchar" MaxLength="5" Nullable="false" />
+        </EntityType>
+        <EntityType Name="TONT_ZONAS">
+          <Key>
+            <PropertyRef Name="CDZONA" />
+          </Key>
+          <Property Name="CDZONA" Type="varchar" MaxLength="3" Nullable="false" />
+          <Property Name="DSNOMBRE" Type="varchar" MaxLength="45" Nullable="false" />
+        </EntityType>
+        <Association Name="FK_TONT_PAISES_AVES_TONT_AVES">
+          <End Role="TONT_AVES" Type="Self.TONT_AVES" Multiplicity="1">
+            <OnDelete Action="Cascade" />
+          </End>
+          <End Role="TONT_PAISES_AVES" Type="Self.TONT_PAISES_AVES" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="TONT_AVES">
+              <PropertyRef Name="CDAVE" />
+            </Principal>
+            <Dependent Role="TONT_PAISES_AVES">
+              <PropertyRef Name="CDAVE" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_TONT_PAISES_AVES_TONT_PAISES">
+          <End Role="TONT_PAISES" Type="Self.TONT_PAISES" Multiplicity="1">
+            <OnDelete Action="Cascade" />
+          </End>
+          <End Role="TONT_PAISES_AVES" Type="Self.TONT_PAISES_AVES" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="TONT_PAISES">
+              <PropertyRef Name="CDPAIS" />
+            </Principal>
+            <Dependent Role="TONT_PAISES_AVES">
+              <PropertyRef Name="CDPAIS" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_TONT_PAISES_TONT_ZONAS">
+          <End Role="TONT_ZONAS" Type="Self.TONT_ZONAS" Multiplicity="1">
+            <OnDelete Action="Cascade" />
+          </End>
+          <End Role="TONT_PAISES" Type="Self.TONT_PAISES" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="TONT_ZONAS">
+              <PropertyRef Name="CDZONA" />
+            </Principal>
+            <Dependent Role="TONT_PAISES">
+              <PropertyRef Name="CDZONA" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityContainer Name="dbModelStoreContainer">
+          <EntitySet Name="TONT_AVES" EntityType="Self.TONT_AVES" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="TONT_PAISES" EntityType="Self.TONT_PAISES" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="TONT_PAISES_AVES" EntityType="Self.TONT_PAISES_AVES" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="TONT_ZONAS" EntityType="Self.TONT_ZONAS" Schema="dbo" store:Type="Tables" />
+          <AssociationSet Name="FK_TONT_PAISES_AVES_TONT_AVES" Association="Self.FK_TONT_PAISES_AVES_TONT_AVES">
+            <End Role="TONT_AVES" EntitySet="TONT_AVES" />
+            <End Role="TONT_PAISES_AVES" EntitySet="TONT_PAISES_AVES" />
+          </AssociationSet>
+          <AssociationSet Name="FK_TONT_PAISES_AVES_TONT_PAISES" Association="Self.FK_TONT_PAISES_AVES_TONT_PAISES">
+            <End Role="TONT_PAISES" EntitySet="TONT_PAISES" />
+            <End Role="TONT_PAISES_AVES" EntitySet="TONT_PAISES_AVES" />
+          </AssociationSet>
+          <AssociationSet Name="FK_TONT_PAISES_TONT_ZONAS" Association="Self.FK_TONT_PAISES_TONT_ZONAS">
+            <End Role="TONT_ZONAS" EntitySet="TONT_ZONAS" />
+            <End Role="TONT_PAISES" EntitySet="TONT_PAISES" />
+          </AssociationSet>
+        </EntityContainer>
+      </Schema>
+    </edmx:StorageModels>
+    <!-- CSDL content -->
+    <edmx:ConceptualModels>
+      <Schema Namespace="dbModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
+        <EntityType Name="TONT_AVES">
+          <Key>
+            <PropertyRef Name="CDAVE" />
+          </Key>
+          <Property Name="CDAVE" Type="String" MaxLength="5" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="DSNOMBRE_COMUN" Type="String" MaxLength="100" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="DSNOMBRE_CIENTIFICO" Type="String" MaxLength="200" FixedLength="false" Unicode="false" Nullable="false" />
+          <NavigationProperty Name="TONT_PAISES" Relationship="Self.TONT_PAISES_AVES" FromRole="TONT_AVES" ToRole="TONT_PAISES" />
+        </EntityType>
+        <EntityType Name="TONT_PAISES">
+          <Key>
+            <PropertyRef Name="CDPAIS" />
+          </Key>
+          <Property Name="CDPAIS" Type="String" MaxLength="3" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="DSNOMBRE" Type="String" MaxLength="100" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="CDZONA" Type="String" MaxLength="3" FixedLength="false" Unicode="false" Nullable="false" />
+          <NavigationProperty Name="TONT_ZONAS" Relationship="Self.FK_TONT_PAISES_TONT_ZONAS" FromRole="TONT_PAISES" ToRole="TONT_ZONAS" />
+          <NavigationProperty Name="TONT_AVES" Relationship="Self.TONT_PAISES_AVES" FromRole="TONT_PAISES" ToRole="TONT_AVES" />
+        </EntityType>
+        <EntityType Name="TONT_ZONAS">
+          <Key>
+            <PropertyRef Name="CDZONA" />
+          </Key>
+          <Property Name="CDZONA" Type="String" MaxLength="3" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="DSNOMBRE" Type="String" MaxLength="45" FixedLength="false" Unicode="false" Nullable="false" />
+          <NavigationProperty Name="TONT_PAISES" Relationship="Self.FK_TONT_PAISES_TONT_ZONAS" FromRole="TONT_ZONAS" ToRole="TONT_PAISES" />
+        </EntityType>
+        <Association Name="FK_TONT_PAISES_TONT_ZONAS">
+          <End Role="TONT_ZONAS" Type="Self.TONT_ZONAS" Multiplicity="1">
+            <OnDelete Action="Cascade" />
+          </End>
+          <End Role="TONT_PAISES" Type="Self.TONT_PAISES" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="TONT_ZONAS">
+              <PropertyRef Name="CDZONA" />
+            </Principal>
+            <Dependent Role="TONT_PAISES">
+              <PropertyRef Name="CDZONA" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="TONT_PAISES_AVES">
+          <End Role="TONT_AVES" Type="Self.TONT_AVES" Multiplicity="*" />
+          <End Role="TONT_PAISES" Type="Self.TONT_PAISES" Multiplicity="*" />
+        </Association>
+        <EntityContainer Name="dbEntities" annotation:LazyLoadingEnabled="true">
+          <EntitySet Name="TONT_AVES" EntityType="Self.TONT_AVES" />
+          <EntitySet Name="TONT_PAISES" EntityType="Self.TONT_PAISES" />
+          <EntitySet Name="TONT_ZONAS" EntityType="Self.TONT_ZONAS" />
+          <AssociationSet Name="FK_TONT_PAISES_TONT_ZONAS" Association="Self.FK_TONT_PAISES_TONT_ZONAS">
+            <End Role="TONT_ZONAS" EntitySet="TONT_ZONAS" />
+            <End Role="TONT_PAISES" EntitySet="TONT_PAISES" />
+          </AssociationSet>
+          <AssociationSet Name="TONT_PAISES_AVES" Association="Self.TONT_PAISES_AVES">
+            <End Role="TONT_AVES" EntitySet="TONT_AVES" />
+            <End Role="TONT_PAISES" EntitySet="TONT_PAISES" />
+          </AssociationSet>
+        </EntityContainer>
+      </Schema>
+    </edmx:ConceptualModels>
+    <!-- C-S mapping content -->
+    <edmx:Mappings>
+      <Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
+        <EntityContainerMapping StorageEntityContainer="dbModelStoreContainer" CdmEntityContainer="dbEntities">
+          <EntitySetMapping Name="TONT_AVES">
+            <EntityTypeMapping TypeName="dbModel.TONT_AVES">
+              <MappingFragment StoreEntitySet="TONT_AVES">
+                <ScalarProperty Name="CDAVE" ColumnName="CDAVE" />
+                <ScalarProperty Name="DSNOMBRE_COMUN" ColumnName="DSNOMBRE_COMUN" />
+                <ScalarProperty Name="DSNOMBRE_CIENTIFICO" ColumnName="DSNOMBRE_CIENTIFICO" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="TONT_PAISES">
+            <EntityTypeMapping TypeName="dbModel.TONT_PAISES">
+              <MappingFragment StoreEntitySet="TONT_PAISES">
+                <ScalarProperty Name="CDPAIS" ColumnName="CDPAIS" />
+                <ScalarProperty Name="DSNOMBRE" ColumnName="DSNOMBRE" />
+                <ScalarProperty Name="CDZONA" ColumnName="CDZONA" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="TONT_ZONAS">
+            <EntityTypeMapping TypeName="dbModel.TONT_ZONAS">
+              <MappingFragment StoreEntitySet="TONT_ZONAS">
+                <ScalarProperty Name="CDZONA" ColumnName="CDZONA" />
+                <ScalarProperty Name="DSNOMBRE" ColumnName="DSNOMBRE" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <AssociationSetMapping Name="TONT_PAISES_AVES" TypeName="dbModel.TONT_PAISES_AVES" StoreEntitySet="TONT_PAISES_AVES">
+            <EndProperty Name="TONT_AVES">
+              <ScalarProperty Name="CDAVE" ColumnName="CDAVE" />
+            </EndProperty>
+            <EndProperty Name="TONT_PAISES">
+              <ScalarProperty Name="CDPAIS" ColumnName="CDPAIS" />
+            </EndProperty>
+          </AssociationSetMapping>
+        </EntityContainerMapping>
+      </Mapping>
+    </edmx:Mappings>
+  </edmx:Runtime>
+  <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
+    <Connection>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="MetadataArtifactProcessing" Value="EmbedInOutputAssembly" />
+      </DesignerInfoPropertySet>
+    </Connection>
+    <Options>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="ValidateOnBuild" Value="true" />
+        <DesignerProperty Name="EnablePluralization" Value="true" />
+        <DesignerProperty Name="IncludeForeignKeysInModel" Value="true" />
+        <DesignerProperty Name="UseLegacyProvider" Value="false" />
+        <DesignerProperty Name="CodeGenerationStrategy" Value="None" />
+      </DesignerInfoPropertySet>
+    </Options>
+    <!-- Diagram content (shape and connector positions) -->
+    <Diagrams></Diagrams>
+  </Designer>
+</edmx:Edmx>

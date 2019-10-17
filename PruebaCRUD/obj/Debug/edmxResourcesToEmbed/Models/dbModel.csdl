@@ -1,0 +1,61 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Schema Namespace="dbModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
+  <EntityType Name="TONT_AVES">
+    <Key>
+      <PropertyRef Name="CDAVE" />
+    </Key>
+    <Property Name="CDAVE" Type="String" MaxLength="5" FixedLength="false" Unicode="false" Nullable="false" />
+    <Property Name="DSNOMBRE_COMUN" Type="String" MaxLength="100" FixedLength="false" Unicode="false" Nullable="false" />
+    <Property Name="DSNOMBRE_CIENTIFICO" Type="String" MaxLength="200" FixedLength="false" Unicode="false" Nullable="false" />
+    <NavigationProperty Name="TONT_PAISES" Relationship="Self.TONT_PAISES_AVES" FromRole="TONT_AVES" ToRole="TONT_PAISES" />
+  </EntityType>
+  <EntityType Name="TONT_PAISES">
+    <Key>
+      <PropertyRef Name="CDPAIS" />
+    </Key>
+    <Property Name="CDPAIS" Type="String" MaxLength="3" FixedLength="false" Unicode="false" Nullable="false" />
+    <Property Name="DSNOMBRE" Type="String" MaxLength="100" FixedLength="false" Unicode="false" Nullable="false" />
+    <Property Name="CDZONA" Type="String" MaxLength="3" FixedLength="false" Unicode="false" Nullable="false" />
+    <NavigationProperty Name="TONT_ZONAS" Relationship="Self.FK_TONT_PAISES_TONT_ZONAS" FromRole="TONT_PAISES" ToRole="TONT_ZONAS" />
+    <NavigationProperty Name="TONT_AVES" Relationship="Self.TONT_PAISES_AVES" FromRole="TONT_PAISES" ToRole="TONT_AVES" />
+  </EntityType>
+  <EntityType Name="TONT_ZONAS">
+    <Key>
+      <PropertyRef Name="CDZONA" />
+    </Key>
+    <Property Name="CDZONA" Type="String" MaxLength="3" FixedLength="false" Unicode="false" Nullable="false" />
+    <Property Name="DSNOMBRE" Type="String" MaxLength="45" FixedLength="false" Unicode="false" Nullable="false" />
+    <NavigationProperty Name="TONT_PAISES" Relationship="Self.FK_TONT_PAISES_TONT_ZONAS" FromRole="TONT_ZONAS" ToRole="TONT_PAISES" />
+  </EntityType>
+  <Association Name="FK_TONT_PAISES_TONT_ZONAS">
+    <End Role="TONT_ZONAS" Type="Self.TONT_ZONAS" Multiplicity="1">
+      <OnDelete Action="Cascade" />
+    </End>
+    <End Role="TONT_PAISES" Type="Self.TONT_PAISES" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="TONT_ZONAS">
+        <PropertyRef Name="CDZONA" />
+      </Principal>
+      <Dependent Role="TONT_PAISES">
+        <PropertyRef Name="CDZONA" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="TONT_PAISES_AVES">
+    <End Role="TONT_AVES" Type="Self.TONT_AVES" Multiplicity="*" />
+    <End Role="TONT_PAISES" Type="Self.TONT_PAISES" Multiplicity="*" />
+  </Association>
+  <EntityContainer Name="dbEntities" annotation:LazyLoadingEnabled="true">
+    <EntitySet Name="TONT_AVES" EntityType="Self.TONT_AVES" />
+    <EntitySet Name="TONT_PAISES" EntityType="Self.TONT_PAISES" />
+    <EntitySet Name="TONT_ZONAS" EntityType="Self.TONT_ZONAS" />
+    <AssociationSet Name="FK_TONT_PAISES_TONT_ZONAS" Association="Self.FK_TONT_PAISES_TONT_ZONAS">
+      <End Role="TONT_ZONAS" EntitySet="TONT_ZONAS" />
+      <End Role="TONT_PAISES" EntitySet="TONT_PAISES" />
+    </AssociationSet>
+    <AssociationSet Name="TONT_PAISES_AVES" Association="Self.TONT_PAISES_AVES">
+      <End Role="TONT_AVES" EntitySet="TONT_AVES" />
+      <End Role="TONT_PAISES" EntitySet="TONT_PAISES" />
+    </AssociationSet>
+  </EntityContainer>
+</Schema>
