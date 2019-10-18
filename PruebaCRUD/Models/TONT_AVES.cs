@@ -11,7 +11,8 @@ namespace PruebaCRUD.Models
 {
     using System;
     using System.Collections.Generic;
-    
+    using System.ComponentModel.DataAnnotations;
+
     public partial class TONT_AVES
     {
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
@@ -19,9 +20,15 @@ namespace PruebaCRUD.Models
         {
             this.TONT_PAISES = new HashSet<TONT_PAISES>();
         }
-    
+        [Required(ErrorMessage = "El código es requerido")]
+        [StringLength(5, ErrorMessage = "Máximo 5 caracteres")]
+
         public string CDAVE { get; set; }
+        [Required(ErrorMessage = "El nombre común es requerido")]
+        [StringLength(100, ErrorMessage = "Máximo 100 caracteres")]
         public string DSNOMBRE_COMUN { get; set; }
+        [Required(ErrorMessage = "El nombre científico es requerido")]
+        [StringLength(200, ErrorMessage = "Máximo 200 caracteres")]
         public string DSNOMBRE_CIENTIFICO { get; set; }
     
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]

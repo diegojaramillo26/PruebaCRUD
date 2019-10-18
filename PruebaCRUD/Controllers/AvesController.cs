@@ -20,7 +20,7 @@ namespace PruebaCRUD.Controllers
 
             var Zonas = db.TONT_ZONAS.ToList();
             ViewBag.Zonas = new SelectList(Zonas, "CDZONA", "DSNOMBRE");
-            //ViewBag.selectedValue = db.Country.Where(a => a.CountryId == country.CountryId).Select(a => a.CountryName).SingleOrDefault();
+            
 
             if (!String.IsNullOrEmpty(searchNombre) && !String.IsNullOrEmpty(searchZona)) 
             {
@@ -55,7 +55,7 @@ namespace PruebaCRUD.Controllers
         public ActionResult Create()
         {
             List<TONT_PAISES> ListaPaises = db.TONT_PAISES.ToList();
-            ViewBag.ListaPaises = ListaPaises;
+            ViewBag.ListaPaises = new SelectList(ListaPaises, "CDPAIS", "DSNOMBRE"); ;
             return View();
         }
 
@@ -64,10 +64,11 @@ namespace PruebaCRUD.Controllers
         // more details see https://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Create([Bind(Include = "CDAVE,DSNOMBRE_COMUN,DSNOMBRE_CIENTIFICO")] TONT_AVES tONT_AVES)
+        public ActionResult Create([Bind(Include = "CDAVE,DSNOMBRE_COMUN,DSNOMBRE_CIENTIFICO")] TONT_AVES tONT_AVES, string Pais)
         {
             if (ModelState.IsValid)
             {
+                tONT_AVES.TONT_PAISES.Add(db.TONT_PAISES.Find(Pais));
                 db.TONT_AVES.Add(tONT_AVES);
                 db.SaveChanges();
                 return RedirectToAction("Index");
@@ -79,15 +80,21 @@ namespace PruebaCRUD.Controllers
         // GET: Aves/Edit/5
         public ActionResult Edit(string id)
         {
+
+            //ViewBag.selectedValue = db.Country.Where(a => a.CountryId == country.CountryId).Select(a => a.CountryName).SingleOrDefault();
+
             if (id == null)
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
             TONT_AVES tONT_AVES = db.TONT_AVES.Find(id);
+            List<TONT_PAISES> ListaPaises = db.TONT_PAISES.ToList();
+            ViewBag.ListaPaises = new SelectList(ListaPaises, "CDPAIS", "DSNOMBRE",tONT_AVES.TONT_PAISES.FirstOrDefault().CDPAIS);
             if (tONT_AVES == null)
             {
                 return HttpNotFound();
             }
+
             return View(tONT_AVES);
         }
 
@@ -96,11 +103,16 @@ namespace PruebaCRUD.Controllers
         // more details see https://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Edit([Bind(Include = "CDAVE,DSNOMBRE_COMUN,DSNOMBRE_CIENTIFICO")] TONT_AVES tONT_AVES)
+        public ActionResult Edit([Bind(Include = "CDAVE,DSNOMBRE_COMUN,DSNOMBRE_CIENTIFICO")] TONT_AVES tONT_AVES, string Pais)
         {
             if (ModelState.IsValid)
             {
                 db.Entry(tONT_AVES).State = EntityState.Modified;
+                db.SaveChanges();
+
+                TONT_AVES a = db.TONT_AVES.Include(p => p.TONT_PAISES).ToList().Find(ap => ap.CDAVE == tONT_AVES.CDAVE);
+                a.TONT_PAISES.Clear();
+                a.TONT_PAISES.Add(db.TONT_PAISES.Find(Pais));
                 db.SaveChanges();
                 return RedirectToAction("Index");
             }

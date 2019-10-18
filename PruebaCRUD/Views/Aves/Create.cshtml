@@ -5,7 +5,7 @@
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
 
-<h2>Create</h2>
+<h2>Crear ave</h2>
 
 
 @using (Html.BeginForm()) 
@@ -13,11 +13,10 @@
     @Html.AntiForgeryToken()
     
 <div class="form-horizontal">
-    <h4>TONT_AVES</h4>
     <hr />
     @Html.ValidationSummary(true, "", new { @class = "text-danger" })
     <div class="form-group">
-        @Html.LabelFor(model => model.CDAVE, htmlAttributes: new { @class = "control-label col-md-2" })
+        @Html.Label("Código Ave", htmlAttributes: new { @class = "control-label col-md-2" })
         <div class="col-md-10">
             @Html.EditorFor(model => model.CDAVE, new { htmlAttributes = new { @class = "form-control" } })
             @Html.ValidationMessageFor(model => model.CDAVE, "", new { @class = "text-danger" })
@@ -25,7 +24,7 @@
     </div>
 
     <div class="form-group">
-        @Html.LabelFor(model => model.DSNOMBRE_COMUN, htmlAttributes: new { @class = "control-label col-md-2" })
+        @Html.Label("Nombre Común", htmlAttributes: new { @class = "control-label col-md-2" })
         <div class="col-md-10">
             @Html.EditorFor(model => model.DSNOMBRE_COMUN, new { htmlAttributes = new { @class = "form-control" } })
             @Html.ValidationMessageFor(model => model.DSNOMBRE_COMUN, "", new { @class = "text-danger" })
@@ -33,31 +32,32 @@
     </div>
 
     <div class="form-group">
-        @Html.LabelFor(model => model.DSNOMBRE_CIENTIFICO, htmlAttributes: new { @class = "control-label col-md-2" })
+        @Html.Label("Nombre Científico", htmlAttributes: new { @class = "control-label col-md-2" })
         <div class="col-md-10">
             @Html.EditorFor(model => model.DSNOMBRE_CIENTIFICO, new { htmlAttributes = new { @class = "form-control" } })
             @Html.ValidationMessageFor(model => model.DSNOMBRE_CIENTIFICO, "", new { @class = "text-danger" })
         </div>
     </div>
 
-    @*<div class="form-group">
-        @Html.LabelFor(model => model.DSNOMBRE_CIENTIFICO, htmlAttributes: new { @class = "control-label col-md-2" })
+    <div class="form-group">
+        @Html.Label("PAIS", htmlAttributes: new { @class = "control-label col-md-2" })
         <div class="col-md-10">
-            @Html.EditorFor(model => model.DSNOMBRE_CIENTIFICO, new { htmlAttributes = new { @class = "form-control" } })
-            @Html.ValidationMessageFor(model => model.DSNOMBRE_CIENTIFICO, "", new { @class = "text-danger" })
+            @*@Html.EditorFor(model => model.DSNOMBRE_CIENTIFICO, new { htmlAttributes = new { @class = "form-control" } })*@
+            @Html.DropDownList("Pais", (SelectList)ViewBag.ListaPaises, htmlAttributes: new { @class = "form-control" })
+            @*@Html.ValidationMessageFor(model => model.DSNOMBRE_CIENTIFICO, "", new { @class = "text-danger" })*@
         </div>
-    </div>*@
+    </div>
 
     <div class="form-group">
         <div class="col-md-offset-2 col-md-10">
-            <input type="submit" value="Create" class="btn btn-default" />
+            <input type="submit" value="Insertar" class="btn btn-primary" />
         </div>
     </div>
 </div>
 }
 
 <div>
-    @Html.ActionLink("Back to List", "Index")
+    @Html.ActionLink("Volver", "Index")
 </div>
 
 @section Scripts {
