@@ -15,9 +15,25 @@ namespace PruebaCRUD.Controllers
         private dbEntities db = new dbEntities();
 
         // GET: Aves
-        public ActionResult Index()
+        public ActionResult Index(string searchNombre, string searchZona)
         {
-            return View(db.TONT_AVES.ToList());
+
+            var Zonas = db.TONT_ZONAS.ToList();
+            ViewBag.Zonas = new SelectList(Zonas, "CDZONA", "DSNOMBRE");
+            //ViewBag.selectedValue = db.Country.Where(a => a.CountryId == country.CountryId).Select(a => a.CountryName).SingleOrDefault();
+
+            if (!String.IsNullOrEmpty(searchNombre) && !String.IsNullOrEmpty(searchZona)) 
+            {
+                var aves = from b in db.TONT_AVES
+                            where (b.DSNOMBRE_CIENTIFICO.Contains(searchNombre) || b.DSNOMBRE_COMUN.Contains(searchNombre)) && b.TONT_PAISES.Any( z => z.TONT_ZONAS.CDZONA == searchZona)
+                            select b;
+                return View(aves.ToList());
+            }
+            else
+            {
+                return View(db.TONT_AVES.ToList());
+            }
+            
         }
 
         // GET: Aves/Details/5
