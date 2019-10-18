@@ -5,25 +5,34 @@
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
 
-
-<p>
-    @Html.ActionLink("Crear Nuevo", "Create")
-</p>
+<br />
 
 @using (Html.BeginForm())
 {
-    <div class="row mb-3">
-     
-        <div class="col-md-4">
-            Nombre: @Html.TextBox("searchNombre", null, htmlAttributes: new { @class = "form-control" })
+    <div class="row">
+        <div class="col-xs-6 col-sm-4">
+            <div class="form-group">
+                <label for="searchNombre">Nombre</label>
+                @Html.TextBox("searchNombre", null, htmlAttributes: new { @class = "form-control", @placeholder = "Ingrese el nombre" })
+            </div>
         </div>
-        <div class="col-md-4">
-            Zona: @Html.DropDownList("searchZona", (SelectList)ViewBag.Zonas, htmlAttributes: new { @class = "form-control" })
+        <div class="col-xs-6 col-sm-4">
+            <div class="form-group">
+                <div class="dropdown">
+                    <label for="searchZona">Zona</label>
+                    @Html.DropDownList("searchZona", (SelectList)ViewBag.Zonas, "-Seleccione-", htmlAttributes: new { @class = "form-control" })
+                </div>
+            </div>
         </div>
-        <div class="col-md-4">
-            <input type="submit" value="Search" class="btn btn-primary" />
+        <div class="col-xs-6 col-sm-4">
+
         </div>
     </div>
+    <div class="form-group">
+        <input type="submit" value="Buscar" class="btn btn-primary" />
+        <input type="button" value="Limpiar" onclick="location.href='@Url.Action("Index","Aves")'" class="btn btn-secondary" />
+    </div>
+
     <br />
 }
 <table class="table">
@@ -66,3 +75,11 @@
     }
 
 </table>
+
+<div class="form-group">
+    @*<p>
+            @Html.ActionLink("Crear Nuevo", "Create")
+        </p>*@
+
+    <input type="button" value="Crear nuevo" onclick="location.href='@Url.Action("Create","Aves")'" class="btn btn-primary" />
+</div>
