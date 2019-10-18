@@ -7,34 +7,30 @@
 
 
 <h3>Esta seguro de eliminar el elemento?</h3>
-<div>
+<div class="form-horizontal">
     <hr />
-    <dl class="dl-horizontal">
-        <dt>
-            <label>Nombre Común</label>
-        </dt>
+    <div class="form-group">
+        <label>Nombre Común</label>
+        @Html.DisplayFor(model => model.DSNOMBRE_COMUN)
+        @*<label>Nombre Cientifíco</label>
+        @Html.DisplayFor(model => model.DSNOMBRE_CIENTIFICO)*@
+    </div>
 
-        <dd>
-            @Html.DisplayFor(model => model.DSNOMBRE_COMUN)
-        </dd>
-
-        <dt>
-            <label>Nombre Cientifíco</label>
-        </dt>
-
-        <dd>
-            @Html.DisplayFor(model => model.DSNOMBRE_CIENTIFICO)
-        </dd>
-
-    </dl>
+    <div class="form-group">
+        @*<label>Nombre Común</label>
+        @Html.DisplayFor(model => model.DSNOMBRE_COMUN)*@
+        <label>Nombre Cientifíco</label>
+        @Html.DisplayFor(model => model.DSNOMBRE_CIENTIFICO)
+    </div>
 
     @using (Html.BeginForm())
     {
         @Html.AntiForgeryToken()
-
-        <div class="form-actions no-color">
-            <input type="submit" value="Delete" class="btn btn-primary" /> |
-            @*@Html.ActionLink("Back to List", "Index")*@
+        <div class="form-group">
+            <div class="form-actions no-color">
+                <input type="submit" value="Eliminar" class="btn btn-primary" />
+                @*@Html.ActionLink("Back to List", "Index")*@
+            </div>
         </div>
     }
 
